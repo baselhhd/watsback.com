@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تسجيل الدخول | تطبيق ويب هوك</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="auth-layout">
+    <header class="top-bar auth-top-bar">
+        <div class="brand">ويب هوك</div>
+        <nav class="top-nav">
+            <a href="index.html">العودة للصفحة الرئيسية</a>
+        </nav>
+    </header>
+
+    <main class="auth-main">
+        <section class="login-card" aria-labelledby="login-title">
+            <div class="login-card__intro">
+                <span class="badge">لوحة التحكم</span>
+                <h1 id="login-title">تسجيل الدخول للمدير</h1>
+                <p>ادخل بيانات حسابك للوصول إلى لوحة التحكم ومتابعة أداء الفروع والموظفين.</p>
+            </div>
+            <form class="login-form" action="#" method="post">
+                <div class="input-group">
+                    <label for="phone">رقم الجوال</label>
+                    <input type="tel" id="phone" name="phone" inputmode="tel" placeholder="05XXXXXXXX" required />
+                </div>
+                <div class="input-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required />
+                </div>
+                <button type="submit" class="cta-button full-width">تسجيل الدخول</button>
+                <p class="form-note">سوف يصلك رمز تحقق عبر واتساب لإتمام تسجيل الدخول.</p>
+            </form>
+        </section>
+        <div class="auth-aside" aria-hidden="true">
+            <div class="aside-card">
+                <h2>تجربة متكاملة للمدير</h2>
+                <ul>
+                    <li>تقارير مباشرة عن المكالمات والردود.</li>
+                    <li>تنبيهات فورية لأهم الأحداث.</li>
+                    <li>تحليلات مدعومة بالذكاء الاصطناعي.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer auth-footer">
+        <div>© <span id="year"></span> ويب هوك. جميع الحقوق محفوظة.</div>
+        <div class="footer-links">
+            <a href="mailto:info@watsback.com">الدعم الفني</a>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
