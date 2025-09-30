@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تحويل المكالمات بسهولة</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>تحويل المكالمات بسهولـة</title>
   <style>
     :root {
       --whatsapp-dark: #075e54;
@@ -13,6 +15,106 @@
       --surface-strong: rgba(255, 255, 255, 0.22);
       --text-strong: rgba(255, 255, 255, 0.92);
       --text-soft: rgba(255, 255, 255, 0.72);
+    }
+    /* ثيم فاتح بأسلوب Apple */
+    body.theme-light {
+      background: linear-gradient(140deg, #f5f6fa 0%, #e5e7eb 40%, #f8fafc 100%);
+      color: #444;
+    }
+    body.theme-light .glass-card {
+      background: #ececec;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.07);
+      backdrop-filter: blur(12px);
+    }
+    body.theme-light .control-card {
+      background: #f6f7f9;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+    }
+    body.theme-light .input-block {
+      background: #f7f7fa;
+      border: 1px solid #e5e7eb;
+      color: #444;
+    }
+    body.theme-light .number-input {
+      background: #f3f4f6;
+      color: #444;
+    }
+    body.theme-light input, body.theme-light select {
+      color: #444;
+      background: transparent;
+    }
+    body.theme-light input::placeholder {
+      color: #aaa;
+    }
+    body.theme-light .logo-bubble {
+      background: linear-gradient(145deg, #e5e7eb 85%, #f8fafc 85%);
+      color: #444;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      border: 1px solid #e5e7eb;
+    }
+    body.theme-light .action-btn {
+      background: linear-gradient(145deg, #f3f4f6 95%, #ececec 95%);
+      color: #444;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      border: 1px solid #e5e7eb;
+      transition: box-shadow 0.2s, background 0.2s;
+    }
+    body.theme-light .action-btn:hover {
+      background: linear-gradient(145deg, #e5e7eb 95%, #f8fafc 95%);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.10);
+    }
+    body.theme-light .action-btn.secondary {
+      background: linear-gradient(145deg, #fff 0%, #f3f4f6 100%);
+      color: #444;
+      border: 1px solid #e5e7eb;
+    }
+    body.theme-light .action-btn.warning {
+      background: linear-gradient(145deg, #ff6b6b, #ff4757);
+      color: #fff;
+    }
+    body.theme-light .status-dot {
+      background: linear-gradient(160deg, #bdbdbd, #e5e7eb);
+      box-shadow: 0 0 12px #e5e7eb;
+      border: 1px solid #e5e7eb;
+    }
+    body.theme-light .status-dot--amber {
+      background: linear-gradient(160deg, #ffd86f, #ffb347);
+      box-shadow: 0 0 12px #ffd86f;
+    }
+    body.theme-light .status-dot--green {
+      background: linear-gradient(160deg, #34c759, #bdbdbd);
+      box-shadow: 0 0 12px #34c759;
+    }
+    body.theme-light .status-dot--blue {
+      background: linear-gradient(160deg, #007aff, #bdbdbd);
+      box-shadow: 0 0 12px #007aff;
+    }
+    body.theme-light .status-dot--violet {
+      background: linear-gradient(160deg, #af52de, #bdbdbd);
+      box-shadow: 0 0 12px #af52de;
+    }
+    body.theme-light .section-headline h2,
+    body.theme-light .section-description,
+    body.theme-light label,
+    body.theme-light small,
+    body.theme-light .number-input span {
+      color: #444 !important;
+    }
+    body.theme-light footer {
+      color: #888;
+    }
+    /* جماليات إضافية */
+    body.theme-light .glass-card {
+      border-radius: 28px;
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.04);
+    }
+    body.theme-light .control-card {
+      border-radius: 22px;
+    }
+    body.theme-light .logo-bubble {
+      border-radius: 18px;
     }
     * {
       box-sizing: border-box;
@@ -108,8 +210,11 @@
     }
     header p {
       margin: 6px 0 0;
-      color: var(--text-soft);
+      color: #888;
       font-size: 15px;
+    }
+    body.theme-light header p {
+      color: #007c25;
     }
     .logo-bubble {
       width: 60px;
@@ -175,6 +280,15 @@
     input::placeholder {
       color: rgba(255, 255, 255, 0.45);
     }
+      input[type="tel"]::-webkit-input-placeholder { color: rgba(255,255,255,0.45); }
+      input[type="tel"]::-moz-placeholder { color: rgba(255,255,255,0.45); }
+      input[type="tel"]:-ms-input-placeholder { color: rgba(255,255,255,0.45); }
+      input[type="tel"]::placeholder { color: rgba(255,255,255,0.45); }
+      @media (max-width: 480px) {
+        .glass-card { padding: 12px; border-radius: 18px; }
+        .action-btn { font-size: 16px; padding: 14px 8px; }
+        input, select { font-size: 18px; }
+      }
     select {
       appearance: none;
       padding-right: 28px;
@@ -363,10 +477,11 @@
   </style>
 </head>
 <body>
-  <div class="background" aria-hidden="true">
-    <span class="orb orb--top"></span>
-    <span class="orb orb--mid"></span>
-    <span class="orb orb--bottom"></span>
+  <!-- زر تبديل الثيم -->
+  <div style="position: absolute; top: 18px; left: 18px; z-index: 10;">
+    <button id="themeToggle" title="تغيير الثيم" style="background: rgba(255,255,255,0.18); border: none; border-radius: 12px; padding: 7px 14px; font-size: 15px; color: #333; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+      <span id="themeIcon">🌙</span> <span id="themeLabel" style="font-size:13px;">مظلم</span>
+    </button>
   </div>
 
   <main>
@@ -375,18 +490,18 @@
         <div class="logo-bubble" aria-hidden="true">📞</div>
         <div>
           <h1>تحويل المكالمات بسهولة</h1>
-          <p>تم التطوير والتنفيذ بواسطة : باسل العنزي</p>
+          <p>منصة تتيح لك بسهولة تحويل المكالمات</p>
         </div>
       </header>
 
       <div class="input-block">
-        <label for="phone">أدخل رقم التحويل الذي ترغب بالتحويل إليه</label>
+        <label for="phone">أدخل رقم الجوال الذي ترغب بالتحويل إليه</label>
         <div class="number-input">
           <span>رقم</span>
           <input type="tel" id="phone" placeholder="مثال: 0590510209" autocomplete="tel">
         </div>
         <small style="color: rgba(255, 255, 255, 0.55); font-size: 13px;">
-        للتواصل والاستفسار<code style="color: rgba(255, 255, 255, 0.8); font-family: inherit;">ceo@baa.sa</code>
+          تم التطوير بواسطة : باسل العنزي<code style="color: rgba(255, 255, 255, 0.8); font-family: inherit;"></code> ceo@baa.sa
         </small>
       </div>
 
@@ -434,7 +549,7 @@
           <span class="status-dot status-dot--red" aria-hidden="true"></span>
           <div>
             <h2>إلغاء جميع التحويلات</h2>
-            <p class="section-description">أعد خطك إلى الوضع العادي فورًا.</p>
+            <p class="section-description">تستطيع الغاء كل اعادادات التحويل</p>
           </div>
         </div>
         <div class="actions" style="justify-content: flex-start;">
@@ -443,7 +558,7 @@
       </section>
 
       <footer>
-        روابط الاتصال من نوع <code style="color: rgba(255, 255, 255, 0.8); font-family: inherit;">tel:</code> تعمل مباشرة من الهاتف لتسهيل تفعيل أو إلغاء التحويل.
+       <code style="color: rgba(19, 18, 18, 0.8); font-family: inherit;">www.watsback.com</code>
       </footer>
     </div>
   </main>
@@ -451,6 +566,31 @@
   <div class="toast" role="status" aria-live="polite"></div>
 
   <script>
+    // تبديل الثيم
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+
+    function setTheme(theme) {
+      document.body.classList.toggle('theme-light', theme === 'light');
+      if (theme === 'light') {
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = 'فاتح';
+      } else {
+        themeIcon.textContent = '🌙';
+        themeLabel.textContent = 'مظلم';
+      }
+      localStorage.setItem('siteTheme', theme);
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.body.classList.contains('theme-light') ? 'light' : 'dark';
+      setTheme(currentTheme === 'light' ? 'dark' : 'light');
+    });
+
+    // عند تحميل الصفحة، استرجع الثيم من LocalStorage
+    const savedTheme = localStorage.getItem('siteTheme') || 'dark';
+    setTheme(savedTheme);
     const phoneInput = document.getElementById('phone');
     const ringtimeSelect = document.getElementById('ringtime');
     const forwardingTypeSelect = document.getElementById('forwardingType');
@@ -523,6 +663,11 @@
       }, 2400);
     }
 
+    // تحقق من صحة الرقم السعودي (يبدأ بـ05 وطوله 10 أرقام)
+    function isValidSaudiNumber(num) {
+      return /^05\d{8}$/.test(num);
+    }
+
     function getNumber() {
       const value = phoneInput.value.trim();
       if (!value) {
@@ -530,8 +675,35 @@
         phoneInput.focus();
         return null;
       }
+      if (!isValidSaudiNumber(value)) {
+        showToast('الرقم غير صحيح. يجب أن يبدأ بـ05 ويتكون من 10 أرقام.');
+        phoneInput.focus();
+        return null;
+      }
       return value;
     }
+
+    // حفظ واسترجاع الرقم ونوع التحويل من LocalStorage
+    function saveSettings() {
+      localStorage.setItem('forwardingNumber', phoneInput.value.trim());
+      localStorage.setItem('forwardingType', forwardingTypeSelect.value);
+      localStorage.setItem('ringtime', ringtimeSelect.value);
+    }
+    function loadSettings() {
+      const savedNumber = localStorage.getItem('forwardingNumber');
+      const savedType = localStorage.getItem('forwardingType');
+      const savedRing = localStorage.getItem('ringtime');
+      if (savedNumber) phoneInput.value = savedNumber;
+      if (savedType) forwardingTypeSelect.value = savedType;
+      if (savedRing) ringtimeSelect.value = savedRing;
+    }
+
+    phoneInput.addEventListener('input', saveSettings);
+    forwardingTypeSelect.addEventListener('change', saveSettings);
+    ringtimeSelect.addEventListener('change', saveSettings);
+
+    // عند تحميل الصفحة
+    loadSettings();
 
     function updateMethodDetails() {
       const selectedKey = forwardingTypeSelect.value;
@@ -591,14 +763,23 @@
       }
     });
 
+    // عند الضغط على زر الحالة أو زر إلغاء، لا يتم التحقق من صحة الرقم
     [actionButtons.status, actionButtons.cancel].forEach((anchor) => {
       anchor.addEventListener('click', (event) => {
         const { code } = anchor.dataset;
-        const link = makeLink(code);
-        if (link === '#') {
-          event.preventDefault();
-        } else {
+        // إذا كان الكود يحتوي على NUM، يجب إدخال رقم، لكن لا نتحقق من صحته
+        if (code && code.includes('NUM')) {
+          const number = phoneInput.value.trim();
+          if (!number) {
+            showToast('رجاءً أدخل رقم للتحقق من الحالة أو الإلغاء.');
+            event.preventDefault();
+            return;
+          }
+          const link = 'tel:' + code.replace('NUM', number);
           anchor.setAttribute('href', link);
+        } else {
+          // إذا لم يكن الكود يحتاج رقم، استخدمه مباشرة
+          anchor.setAttribute('href', 'tel:' + code);
         }
       });
     });
@@ -608,4 +789,3 @@
   </script>
 </body>
 </html>
-
