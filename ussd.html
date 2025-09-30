@@ -1,125 +1,543 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>أوامر تحويل المكالمات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تحويل المكالمات بسهولة</title>
   <style>
-    body { font-family: sans-serif; direction: rtl; text-align: center; }
-    input, select {
-      padding: 10px;
-      font-size: 16px;
-      margin: 10px;
-      text-align: center;
+    :root {
+      --whatsapp-dark: #075e54;
+      --whatsapp-light: #25d366;
+      --whatsapp-mid: #128c7e;
+      --surface: rgba(255, 255, 255, 0.12);
+      --surface-strong: rgba(255, 255, 255, 0.22);
+      --text-strong: rgba(255, 255, 255, 0.92);
+      --text-soft: rgba(255, 255, 255, 0.72);
     }
-    input { width: 250px; }
-    button {
-      padding: 10px 18px;
-      margin: 5px;
-      font-size: 15px;
-      border: none;
-      border-radius: 6px;
-      background-color: #007bff;
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'SF Arabic', 'Cairo', 'Tajawal', 'Segoe UI', sans-serif;
+      background: linear-gradient(140deg, #06221c 0%, #075e54 40%, #0b8f6b 100%);
+      color: var(--text-strong);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(0px);
+      opacity: 0.65;
+      transform: translateZ(0);
+      will-change: transform;
+      animation: float 12s ease-in-out infinite;
+    }
+    .orb--top {
+      width: 420px;
+      height: 420px;
+      top: -120px;
+      right: -140px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.38), rgba(18, 140, 126, 0.1) 70%, rgba(0, 0, 0, 0));
+      animation-delay: -3s;
+    }
+    .orb--bottom {
+      width: 520px;
+      height: 520px;
+      bottom: -200px;
+      left: -160px;
+      background: radial-gradient(circle at 70% 70%, rgba(37, 211, 102, 0.45), rgba(0, 0, 0, 0));
+      animation-duration: 14s;
+    }
+    .orb--mid {
+      width: 360px;
+      height: 360px;
+      top: 40%;
+      right: 10%;
+      background: radial-gradient(circle at 50% 50%, rgba(24, 196, 145, 0.5), rgba(7, 94, 84, 0));
+      animation-duration: 18s;
+      animation-delay: -6s;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(16px, -18px, 0) scale(1.05); }
+    }
+    main {
+      width: min(760px, 100%);
+      position: relative;
+    }
+    .glass-card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 32px;
+      padding: clamp(24px, 4vw, 40px);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.35),
+        0 12px 32px rgba(7, 94, 84, 0.25);
+      backdrop-filter: blur(28px);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      pointer-events: none;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .logo-bubble {
+      width: 62px;
+      height: 62px;
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(37, 211, 102, 0.85), rgba(7, 94, 84, 0.85));
+      display: grid;
+      place-items: center;
+      font-size: 30px;
       color: white;
+      box-shadow:
+        inset 0 4px 12px rgba(255, 255, 255, 0.25),
+        0 16px 30px rgba(7, 94, 84, 0.35);
+      transform: translateZ(0);
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 34px);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    header p {
+      margin: 6px 0 0;
+      color: var(--text-soft);
+      font-size: 15px;
+    }
+    .input-block {
+      background: var(--surface-strong);
+      border-radius: 24px;
+      padding: 20px;
+      display: grid;
+      gap: 12px;
+      margin-bottom: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+    .input-block label {
+      font-size: 15px;
+      color: var(--text-soft);
+    }
+    .number-input {
+      display: flex;
+      align-items: center;
+      background: rgba(6, 34, 28, 0.55);
+      border-radius: 16px;
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .number-input:focus-within {
+      border-color: rgba(37, 211, 102, 0.6);
+      box-shadow: 0 0 0 6px rgba(37, 211, 102, 0.15);
+    }
+    .number-input span {
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+      margin-left: 10px;
+      font-size: 16px;
+    }
+    input, select {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 17px;
+      color: white;
+      font-family: inherit;
+      outline: none;
+    }
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
+    select {
+      appearance: none;
+      padding-right: 28px;
       cursor: pointer;
     }
-    button:hover { background-color: #0056b3; }
-    .section { margin: 20px 0; }
-  </style>
-  <script>
-    function makeLink(code) {
-      const num = document.getElementById("phone").value.trim();
-      if (!num) {
-        alert("الرجاء إدخال الرقم الافتراضي أولاً");
-        return "#";
+    .select-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(6, 34, 28, 0.5);
+      border-radius: 16px;
+      padding: 10px 16px;
+      border: 1px solid transparent;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .select-wrapper:focus-within {
+      border-color: rgba(37, 211, 102, 0.6);
+      box-shadow: 0 0 0 6px rgba(37, 211, 102, 0.15);
+    }
+    .select-wrapper::after {
+      content: '';
+      position: absolute;
+      left: 16px;
+      width: 12px;
+      height: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+      border-right: 2px solid rgba(255, 255, 255, 0.7);
+      transform: rotate(45deg);
+      pointer-events: none;
+    }
+    .panel {
+      display: grid;
+      gap: 18px;
+    }
+    .panel-section {
+      background: rgba(6, 34, 28, 0.45);
+      border-radius: 24px;
+      padding: 20px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.08),
+        0 12px 24px rgba(0, 0, 0, 0.22);
+      transform: perspective(900px) translateZ(0);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .panel-section:hover {
+      transform: perspective(900px) translate3d(0, -6px, 12px) rotateX(2deg);
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.1),
+        0 30px 50px rgba(0, 0, 0, 0.35);
+    }
+    .section-headline {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .status-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 12px;
+      background: linear-gradient(160deg, rgba(37, 211, 102, 1), rgba(18, 140, 126, 0.8));
+      box-shadow: 0 0 12px rgba(37, 211, 102, 0.8);
+    }
+    .status-dot--amber {
+      background: linear-gradient(160deg, #ffd86f, #ffb347);
+      box-shadow: 0 0 12px rgba(255, 216, 111, 0.8);
+    }
+    .status-dot--red {
+      background: linear-gradient(160deg, #ff6b6b, #ff4757);
+      box-shadow: 0 0 12px rgba(255, 107, 107, 0.8);
+    }
+    .section-headline h2 {
+      margin: 0;
+      font-size: 19px;
+    }
+    .section-headline p {
+      margin: 2px 0 0;
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 140px;
+      padding: 12px 18px;
+      border-radius: 18px;
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      background: linear-gradient(145deg, rgba(37, 211, 102, 0.95), rgba(7, 94, 84, 0.95));
+      box-shadow:
+        inset 0 2px 6px rgba(255, 255, 255, 0.2),
+        0 12px 20px rgba(0, 0, 0, 0.25);
+    }
+    .action-btn:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        inset 0 2px 6px rgba(255, 255, 255, 0.2),
+        0 18px 30px rgba(0, 0, 0, 0.3);
+    }
+    .action-btn:active {
+      transform: translateY(0);
+      box-shadow:
+        inset 0 2px 6px rgba(255, 255, 255, 0.2),
+        0 10px 18px rgba(0, 0, 0, 0.28);
+    }
+    .action-btn.secondary {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+      color: var(--text-strong);
+    }
+    .action-btn.warning {
+      background: linear-gradient(145deg, #ff6b6b, #ff4757);
+    }
+    footer {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .toast {
+      position: fixed;
+      bottom: 40px;
+      right: 50%;
+      transform: translateX(50%) translateY(120%);
+      background: rgba(7, 94, 84, 0.94);
+      padding: 14px 22px;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+      opacity: 0;
+      z-index: 99;
+    }
+    .toast.is-visible {
+      transform: translateX(50%) translateY(0);
+      opacity: 1;
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 16px;
       }
-      return "tel:" + code.replace("NUM", num);
+      .glass-card {
+        padding: 24px 20px 26px;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: right;
+      }
+      .logo-bubble {
+        width: 54px;
+        height: 54px;
+        font-size: 26px;
+      }
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .action-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background" aria-hidden="true">
+    <span class="orb orb--top"></span>
+    <span class="orb orb--mid"></span>
+    <span class="orb orb--bottom"></span>
+  </div>
+
+  <main>
+    <div class="glass-card">
+      <header>
+        <div class="logo-bubble" aria-hidden="true">📞</div>
+        <div>
+          <h1>تحويل المكالمات بسهولة</h1>
+          <p>واجهة مستوحاة من ألوان واتساب مع إحساس أنيق بنمط iOS</p>
+        </div>
+      </header>
+
+      <div class="input-block">
+        <label for="phone">أدخل رقم التحويل الذي ترغب بالتحويل إليه</label>
+        <div class="number-input">
+          <span>رقم</span>
+          <input type="tel" id="phone" placeholder="مثال: 0535500370" autocomplete="tel">
+        </div>
+        <small style="color: rgba(255, 255, 255, 0.55); font-size: 13px;">
+          سيتم استخدام هذا الرقم داخل روابط <code style="color: rgba(255, 255, 255, 0.8); font-family: inherit;">tel:</code> لطلبات الاتصال المباشر.
+        </small>
+      </div>
+
+      <div class="panel">
+        <section class="panel-section">
+          <div class="section-headline">
+            <span class="status-dot status-dot--amber" aria-hidden="true"></span>
+            <div>
+              <h2>تحويل عند عدم الرد</h2>
+              <p>اختر عدد الثواني قبل تحويل المكالمة في حال عدم الرد</p>
+            </div>
+          </div>
+          <div class="select-wrapper" aria-label="عدد الثواني قبل التحويل">
+            <select id="ringtime">
+              <option value="5">5 ثوانٍ</option>
+              <option value="10">10 ثوانٍ</option>
+              <option value="15">15 ثانية</option>
+              <option value="20">20 ثانية</option>
+              <option value="25">25 ثانية</option>
+              <option value="30" selected>30 ثانية</option>
+            </select>
+          </div>
+          <div class="actions">
+            <a href="#" class="action-btn" data-action="with-time">تفعيل</a>
+            <a href="#" class="action-btn secondary" data-code="##61#">إلغاء</a>
+            <a href="#" class="action-btn secondary" data-code="*#61#">الحالة</a>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <div class="section-headline">
+            <span class="status-dot" aria-hidden="true"></span>
+            <div>
+              <h2>تحويل عند انشغال الخط</h2>
+              <p>حوّل المكالمة إلى الرقم المختار إذا كان خطك مشغولاً</p>
+            </div>
+          </div>
+          <div class="actions">
+            <a href="#" class="action-btn" data-code="**67*NUM#">تفعيل</a>
+            <a href="#" class="action-btn secondary" data-code="##67#">إلغاء</a>
+            <a href="#" class="action-btn secondary" data-code="*#67#">الحالة</a>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <div class="section-headline">
+            <span class="status-dot" aria-hidden="true"></span>
+            <div>
+              <h2>تحويل عند عدم توفر الشبكة</h2>
+              <p>وجّه المكالمات إذا كان الهاتف مغلقًا أو خارج التغطية</p>
+            </div>
+          </div>
+          <div class="actions">
+            <a href="#" class="action-btn" data-code="**62*NUM#">تفعيل</a>
+            <a href="#" class="action-btn secondary" data-code="##62#">إلغاء</a>
+            <a href="#" class="action-btn secondary" data-code="*#62#">الحالة</a>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <div class="section-headline">
+            <span class="status-dot" aria-hidden="true"></span>
+            <div>
+              <h2>تحويل دائم لكل المكالمات</h2>
+              <p>حوّل كل مكالماتك مباشرة إلى الرقم المحدد</p>
+            </div>
+          </div>
+          <div class="actions">
+            <a href="#" class="action-btn" data-code="**21*NUM#">تفعيل</a>
+            <a href="#" class="action-btn secondary" data-code="##21#">إلغاء</a>
+            <a href="#" class="action-btn secondary" data-code="*#21#">الحالة</a>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <div class="section-headline">
+            <span class="status-dot status-dot--red" aria-hidden="true"></span>
+            <div>
+              <h2>إلغاء جميع التحويلات</h2>
+              <p>أعد خطك إلى الوضع العادي فورًا</p>
+            </div>
+          </div>
+          <div class="actions">
+            <a href="tel:##002#" class="action-btn warning">إلغاء شامل</a>
+          </div>
+        </section>
+      </div>
+
+      <footer>
+        روابط الاتصال من نوع <code style="color: rgba(255, 255, 255, 0.8); font-family: inherit;">tel:</code> تعمل مباشرة من الهاتف لتسهيل تفعيل أو إلغاء التحويل.
+      </footer>
+    </div>
+  </main>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const phoneInput = document.getElementById('phone');
+    const ringtimeSelect = document.getElementById('ringtime');
+    const toast = document.querySelector('.toast');
+    let toastTimeout;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('is-visible');
+      }, 2400);
+    }
+
+    function getNumber() {
+      const value = phoneInput.value.trim();
+      if (!value) {
+        showToast('رجاءً أدخل رقم التحويل أولاً.');
+        phoneInput.focus();
+        return null;
+      }
+      return value;
+    }
+
+    function makeLink(codePattern) {
+      const number = getNumber();
+      if (!number) {
+        return '#';
+      }
+      return 'tel:' + codePattern.replace('NUM', number);
     }
 
     function makeLinkWithTime() {
-      const num = document.getElementById("phone").value.trim();
-      const sec = document.getElementById("ringtime").value;
-      if (!num) {
-        alert("الرجاء إدخال الرقم الافتراضي أولاً");
-        return "#";
+      const number = getNumber();
+      if (!number) {
+        return '#';
       }
-      return "tel:**61*" + num + "**" + sec + "%23";
+      const seconds = ringtimeSelect.value;
+      return 'tel:**61*' + number + '**' + seconds + '%23';
+    }
+
+    document.querySelectorAll('.action-btn[data-code]').forEach((anchor) => {
+      anchor.addEventListener('click', (event) => {
+        const link = makeLink(anchor.dataset.code);
+        if (link === '#') {
+          event.preventDefault();
+          return;
+        }
+        anchor.setAttribute('href', link);
+      });
+    });
+
+    const withTimeBtn = document.querySelector('.action-btn[data-action="with-time"]');
+    if (withTimeBtn) {
+      withTimeBtn.addEventListener('click', (event) => {
+        const link = makeLinkWithTime();
+        if (link === '#') {
+          event.preventDefault();
+          return;
+        }
+        withTimeBtn.setAttribute('href', link);
+      });
     }
   </script>
-</head>
-<body>
-
-  <h2>إدارة تحويل المكالمات (USSD)</h2>
-  <p>أدخل رقمك الافتراضي هنا:</p>
-  <input type="text" id="phone" placeholder="مثال: 0535500370">
-
-  <div class="section">
-    <h3>تحويل عند عدم الرد</h3>
-    <p>اختر مدة الرنين قبل التحويل:</p>
-    <select id="ringtime">
-      <option value="5">5 ثوانٍ</option>
-      <option value="10">10 ثوانٍ</option>
-      <option value="15">15 ثانية</option>
-      <option value="20">20 ثانية</option>
-      <option value="25">25 ثانية</option>
-      <option value="30" selected>30 ثانية</option>
-    </select>
-    <br>
-    <a href="#" onclick="this.href=makeLinkWithTime()">
-      <button>تفعيل بالمدة المحددة</button>
-    </a>
-    <a href="#" onclick="this.href=makeLink('##61#')">
-      <button>إلغاء</button>
-    </a>
-    <a href="#" onclick="this.href=makeLink('*#61#')">
-      <button>استعلام</button>
-    </a>
-  </div>
-
-  <div class="section">
-    <h3>تحويل عند الانشغال</h3>
-    <a href="#" onclick="this.href=makeLink('**67*NUM#')">
-      <button>تفعيل</button>
-    </a>
-    <a href="#" onclick="this.href=makeLink('##67#')">
-      <button>إلغاء</button>
-    </a>
-    <a href="#" onclick="this.href=makeLink('*#67#')">
-      <button>استعلام</button>
-    </a>
-  </div>
-
-  <div class="section">
-    <h3>تحويل عند عدم وجود شبكة</h3>
-    <a href="#" onclick="this.href=makeLink('**62*NUM#')">
-      <button>تفعيل</button>
-    </a>
-    <a href="#" onclick="this.href=makeLink('##62#')">
-      <button>إلغاء</button>
-    </a>
-    <a href="#" onclick="this.href=makeLink('*#62#')">
-      <button>استعلام</button>
-    </a>
-  </div>
-
-  <div class="section">
-    <h3>تحويل دائم (كل المكالمات)</h3>
-    <a href="#" onclick="this.href=makeLink('**21*NUM#')">
-      <button>تفعيل</button>
-    </a>
-    <a href="#" onclick="this.href=makeLink('##21#')">
-      <button>إلغاء</button>
-    </a>
-    <a href="#" onclick="this.href=makeLink('*#21#')">
-      <button>استعلام</button>
-    </a>
-  </div>
-
-  <div class="section">
-    <h3>إلغاء جميع التحويلات</h3>
-    <a href="tel:##002#">
-      <button style="background-color: #dc3545;">إلغاء الكل</button>
-    </a>
-  </div>
-
 </body>
 </html>
