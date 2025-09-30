@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>أوامر تحويل المكالمات</title>
+  <style>
+    body { font-family: sans-serif; direction: rtl; text-align: center; }
+    input, select {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+      text-align: center;
+    }
+    input { width: 250px; }
+    button {
+      padding: 10px 18px;
+      margin: 5px;
+      font-size: 15px;
+      border: none;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover { background-color: #0056b3; }
+    .section { margin: 20px 0; }
+  </style>
+  <script>
+    function makeLink(code) {
+      const num = document.getElementById("phone").value.trim();
+      if (!num) {
+        alert("الرجاء إدخال الرقم الافتراضي أولاً");
+        return "#";
+      }
+      return "tel:" + code.replace("NUM", num);
+    }
+
+    function makeLinkWithTime() {
+      const num = document.getElementById("phone").value.trim();
+      const sec = document.getElementById("ringtime").value;
+      if (!num) {
+        alert("الرجاء إدخال الرقم الافتراضي أولاً");
+        return "#";
+      }
+      return "tel:**61*" + num + "**" + sec + "%23";
+    }
+  </script>
+</head>
+<body>
+
+  <h2>إدارة تحويل المكالمات (USSD)</h2>
+  <p>أدخل رقمك الافتراضي هنا:</p>
+  <input type="text" id="phone" placeholder="مثال: 0535500370">
+
+  <div class="section">
+    <h3>تحويل عند عدم الرد</h3>
+    <p>اختر مدة الرنين قبل التحويل:</p>
+    <select id="ringtime">
+      <option value="5">5 ثوانٍ</option>
+      <option value="10">10 ثوانٍ</option>
+      <option value="15">15 ثانية</option>
+      <option value="20">20 ثانية</option>
+      <option value="25">25 ثانية</option>
+      <option value="30" selected>30 ثانية</option>
+    </select>
+    <br>
+    <a href="#" onclick="this.href=makeLinkWithTime()">
+      <button>تفعيل بالمدة المحددة</button>
+    </a>
+    <a href="#" onclick="this.href=makeLink('##61#')">
+      <button>إلغاء</button>
+    </a>
+    <a href="#" onclick="this.href=makeLink('*#61#')">
+      <button>استعلام</button>
+    </a>
+  </div>
+
+  <div class="section">
+    <h3>تحويل عند الانشغال</h3>
+    <a href="#" onclick="this.href=makeLink('**67*NUM#')">
+      <button>تفعيل</button>
+    </a>
+    <a href="#" onclick="this.href=makeLink('##67#')">
+      <button>إلغاء</button>
+    </a>
+    <a href="#" onclick="this.href=makeLink('*#67#')">
+      <button>استعلام</button>
+    </a>
+  </div>
+
+  <div class="section">
+    <h3>تحويل عند عدم وجود شبكة</h3>
+    <a href="#" onclick="this.href=makeLink('**62*NUM#')">
+      <button>تفعيل</button>
+    </a>
+    <a href="#" onclick="this.href=makeLink('##62#')">
+      <button>إلغاء</button>
+    </a>
+    <a href="#" onclick="this.href=makeLink('*#62#')">
+      <button>استعلام</button>
+    </a>
+  </div>
+
+  <div class="section">
+    <h3>تحويل دائم (كل المكالمات)</h3>
+    <a href="#" onclick="this.href=makeLink('**21*NUM#')">
+      <button>تفعيل</button>
+    </a>
+    <a href="#" onclick="this.href=makeLink('##21#')">
+      <button>إلغاء</button>
+    </a>
+    <a href="#" onclick="this.href=makeLink('*#21#')">
+      <button>استعلام</button>
+    </a>
+  </div>
+
+  <div class="section">
+    <h3>إلغاء جميع التحويلات</h3>
+    <a href="tel:##002#">
+      <button style="background-color: #dc3545;">إلغاء الكل</button>
+    </a>
+  </div>
+
+</body>
+</html>
